@@ -1,12 +1,13 @@
 using UnityEngine;
+using System;
 
 public class ContactsDetector : MonoBehaviour
 {
+    public event Action PillUsed;
+
     public bool IsGrounded { get; private set; }
 
-    public bool IsCetched { get; private set; }
-
-    public bool IsCured { get; private set; }
+    public bool HasFind { get; private set; }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -15,16 +16,19 @@ public class ContactsDetector : MonoBehaviour
             IsGrounded = true;
         }
 
-        if (collision.gameObject.TryGetComponent(out Coin coin))
+        if (collision.gameObject.TryGetComponent(out Unit unit))
         {
-            coin.ChangeStatus();
-        }
+            if (unit is Coin)
+            {
+                unit.Disappear();
+            }
 
-        if (collision.gameObject.TryGetComponent(out Pill pill))
-        {
-            IsCured = true;
+            if (unit is Pill)
+            {
+                unit.Disappear();
 
-            pill.ChangeStatus();
+                PillUsed?.Invoke();
+            }          
         }
     }
 
@@ -38,6 +42,6 @@ public class ContactsDetector : MonoBehaviour
 
     public void ChgangeCureStatus()
     {
-        IsCured = false;
+        HasFind = false;
     }
 }

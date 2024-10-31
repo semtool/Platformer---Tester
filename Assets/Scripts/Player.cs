@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     private float _currentHealth;
     private float _minHealth = 0;
 
-
     private void Awake()
     {
         _playerMover = GetComponent<PlayerMover>();
@@ -24,6 +23,12 @@ public class Player : MonoBehaviour
         _contactsDetector = GetComponent<ContactsDetector>();
         _pill = GetComponent<Pill>();
     }
+
+    private void OnEnable()
+    {
+        _contactsDetector.PillUsed += TakePill;
+    }
+
     private void Start()
     {
         _currentHealth = _maxHealth;
@@ -42,13 +47,6 @@ public class Player : MonoBehaviour
         {
             _playerMover.Jump();
             _inputReader.StopToJump();
-        }
-
-        if (_contactsDetector.IsCured)
-        {
-            TakePill();
-
-            _contactsDetector.ChgangeCureStatus();
         }
 
         Disappear();
@@ -83,5 +81,10 @@ public class Player : MonoBehaviour
     private void ShowHealth()
     {
         Debug.Log(_currentHealth);
+    }
+
+    private void OnDisable()
+    {
+        _contactsDetector.PillUsed -= TakePill;
     }
 }
