@@ -8,7 +8,6 @@ public class EmemySpawner : MonoBehaviour
     private Transform[] _allPointsTransform;
     private Vector2 _startPosition;
 
-
     private void Awake()
     {
         _allPointsTransform = new Transform[_spawnPointsTransform.childCount];

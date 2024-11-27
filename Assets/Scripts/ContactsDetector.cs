@@ -31,17 +31,4 @@ public class ContactsDetector : MonoBehaviour
             }          
         }
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Surface surface))
-        {
-            IsGrounded = false;
-        }
-    }
-
-    public void ChgangeCureStatus()
-    {
-        HasFind = false;
-    }
 }

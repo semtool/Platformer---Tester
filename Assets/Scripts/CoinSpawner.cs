@@ -7,11 +7,9 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private Transform _coinsTransform;
 
     private Transform[] _coins;
-    private ContactsDetector _contactsDetector;
-
+  
     private void Awake()
     {
-        _contactsDetector = GetComponent<ContactsDetector>();
         _coins = new Transform[_coinsTransform.childCount];
     }
 

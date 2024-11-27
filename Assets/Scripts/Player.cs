@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(ContactsDetector))]
 [RequireComponent(typeof(Pill))]
-
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
