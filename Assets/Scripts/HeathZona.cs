@@ -1,25 +1,16 @@
-using System.Collections;
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Player))]
-[RequireComponent(typeof(Enemy))]
 public class HeathZona : MonoBehaviour
 {
-    private Player _player;
-    private Enemy _enemy;
-    private Coroutine _coroutineForChanging;
-
-    private void Awake()
-    {
-        _player = GetComponent<Player>();
-        _enemy = GetComponent<Enemy>();
-    }
+    public event Action DamageZonaIsEntered;
+    public event Action DamageZonaIsLeaved;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out Enemy enemy))
         {
-            ActivateCoroutine(_enemy.Damage);
+            DamageZonaIsEntered?.Invoke();
         }
     }
 
@@ -27,32 +18,7 @@ public class HeathZona : MonoBehaviour
     {
         if (other.TryGetComponent(out Enemy enemy))
         {
-            DectivateCoroutine();
-        }
-    }
-
-    private void ActivateCoroutine(float damage)
-    {
-        _coroutineForChanging = StartCoroutine(SpendHealth(damage));
-    }
-
-    private void DectivateCoroutine()
-    {
-        if (_coroutineForChanging != null)
-        {
-            StopCoroutine(_coroutineForChanging);
-        }
-    }
-
-    private IEnumerator SpendHealth(float damage)
-    {
-        while (true)
-        {
-            _player.TakeDamage(damage);
-
-            var wait = new WaitForSeconds(5);
-
-            yield return wait;
+            DamageZonaIsLeaved?.Invoke();
         }
     }
 }

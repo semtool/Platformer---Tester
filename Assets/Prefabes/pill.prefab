@@ -98,8 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be2d27db9f7df442a82b309b2b8f1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream:Assets/Prefabes/pill.prefab
   _healthDose: 10
 --- !u!61 &3056662758609353898
+=======
+  _healthDose: 20
+--- !u!61 &1295854037538140551
+>>>>>>> Stashed changes:Assets/Prefabes/Medicine.prefab
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
