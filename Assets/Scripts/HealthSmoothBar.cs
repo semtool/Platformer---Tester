@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class HealthSmoothBar : HealthScale
+public class HealthSmoothBar : BarScale
 {
     private Coroutine _coroutine;
     private float _volueStep = 0.2f;
