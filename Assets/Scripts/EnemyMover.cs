@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyVision))]
-
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private float _speed;

@@ -2,16 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public abstract class HealthScale : MonoBehaviour
+public abstract class BarScale : MonoBehaviour
 {
     [SerializeField] public Slider _barScale;
     [SerializeField] public Health _health;
 
     private float _barVolueMultiplier = 0.01f;
-<<<<<<< Updated upstream
-=======
+
     private int _maxHealthInPercent = 100;
->>>>>>> Stashed changes
 
     private void Start()
     {
@@ -32,15 +30,11 @@ public abstract class HealthScale : MonoBehaviour
 
     public float GetCurrentBarVolue()
     {
-<<<<<<< Updated upstream
-        return _health.CurrentHealth * _barVolueMultiplier;
-=======
         return CalkulateDataForBar() * _barVolueMultiplier;
     }
 
     private float CalkulateDataForBar()
     {
         return  _health.CurrentHealth * _maxHealthInPercent / _health.MaxHealth;
->>>>>>> Stashed changes
     }
 }
