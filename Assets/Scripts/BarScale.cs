@@ -5,10 +5,9 @@ using UnityEngine.UI;
 public abstract class BarScale : MonoBehaviour
 {
     [SerializeField] public Slider _barScale;
-    [SerializeField] public Health _health;
+    [SerializeField] public UnitLife _health;
 
     private float _barVolueMultiplier = 0.01f;
-
     private int _maxHealthInPercent = 100;
 
     private void Start()

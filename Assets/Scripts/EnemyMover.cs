@@ -7,16 +7,39 @@ public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _attackDictance;
+    [SerializeField] private float _monitoringInterval;
 
     private EnemyVision _enemyVision;
-    private bool _isWork = true;
- 
+    private WaitForSeconds _wait;
+
     private void Awake()
     {
+        _wait = new WaitForSeconds(_monitoringInterval);
+
         _enemyVision = GetComponent<EnemyVision>();
     }
 
-    private void Update()
+    private void Start()
+    {
+        StartCoroutine(MonitorSpace());
+    }
+
+    public void MoveByNavigator(IReadOnlyList<Vector2> vectors)
+    {
+        StartCoroutine(MoveToNextPoint(vectors));
+    }
+
+    private IEnumerator MonitorSpace()
+    {
+        while (enabled)
+        {
+            ToDetectPlayer();
+
+            yield return _wait;
+        }
+    }
+
+    private void ToDetectPlayer()
     {
         foreach (var collider in _enemyVision.ToDetect())
         {
@@ -32,14 +55,9 @@ public class EnemyMover : MonoBehaviour
         }
     }
 
-    public void MoveByNavigator(IReadOnlyList<Vector2> vectors)
-    {
-        StartCoroutine(MoveToNextPoint(vectors));
-    }
-
     private IEnumerator MoveToNextPoint(IReadOnlyList<Vector2> pointsOfRout)
     {
-        while (_isWork)
+        while (enabled)
         {
             for (int i = 0; i < pointsOfRout.Count; i++)
             {

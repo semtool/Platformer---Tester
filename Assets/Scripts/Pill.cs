@@ -4,10 +4,10 @@ public class Pill : ObjectUnit
 {
     [SerializeField] private float _healthDose;
 
-    public float HealthDose { get; private set; }
+    public float HeathDose { get; private set; }
 
     private void Awake()
     {
-        HealthDose = _healthDose;
+        HeathDose = _healthDose;
     }
 }

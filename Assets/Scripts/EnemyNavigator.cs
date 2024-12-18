@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyNavigator : MonoBehaviour
 {
     [SerializeField] private List<Vector2> _routPoints;
+
     public List<Vector2> Router { get; private set; }
 
     private void Awake()

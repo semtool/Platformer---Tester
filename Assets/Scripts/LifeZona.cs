@@ -1,16 +1,19 @@
-using System;
 using UnityEngine;
 
-public class HeathZona : MonoBehaviour
+public class LifeZona : MonoBehaviour
 {
-    public event Action DamageZonaIsEntered;
-    public event Action DamageZonaIsLeaved;
+    private UnitLife _playerHealth;
+
+    private void Awake()
+    {
+        _playerHealth = gameObject.GetComponent<UnitLife>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out Enemy enemy))
         {
-            DamageZonaIsEntered?.Invoke();
+            _playerHealth.TakeDamage(enemy.Damage);
         }
     }
 
@@ -18,7 +21,7 @@ public class HeathZona : MonoBehaviour
     {
         if (other.TryGetComponent(out Enemy enemy))
         {
-            DamageZonaIsLeaved?.Invoke();
+            _playerHealth.StopToTakeDamage();
         }
     }
 }

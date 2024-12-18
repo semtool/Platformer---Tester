@@ -1,11 +1,15 @@
 using UnityEngine;
-using System;
 
 public class ContactsDetector : MonoBehaviour
 {
-    public event Action PillUsed;
+    private UnitLife _playerHealth;
 
     public bool IsGrounded { get; private set; }
+
+    private void Awake()
+    {
+        _playerHealth = gameObject.GetComponent<UnitLife>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -14,18 +18,18 @@ public class ContactsDetector : MonoBehaviour
             IsGrounded = true;
         }
 
-        if (collision.gameObject.TryGetComponent(out ObjectUnit Unit))
+        if (collision.gameObject.TryGetComponent(out ObjectUnit unit))
         {
-            if (Unit is Pill)
+            if (unit is Pill pill)
             {
-                Unit.Disappear();
+                pill.Disappear();
 
-                PillUsed?.Invoke();
+                _playerHealth.IncreaseHealth(pill.HeathDose);
             }
 
-            if (Unit is Coin)
+            if (unit is Coin)
             {
-                Unit.Disappear();
+                unit.Disappear();
             }
         }
     }

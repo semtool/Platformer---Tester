@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : CharacterUnit
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyMover _enemyMover;
     [SerializeField] private float _damage;

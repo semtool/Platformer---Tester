@@ -1,26 +1,24 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(PlayerMover))]
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(ContactsDetector))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(UnitLife))]
 
-public class Player : CharacterUnit
+public class Player : MonoBehaviour
 {
     private PlayerMover _playerMover;
     private ContactsDetector _contactsDetector;
     private InputReader _inputReader;
+
+    public event Action  PillIsTaken;
 
     private void Awake()
     {
         _playerMover = GetComponent<PlayerMover>();
         _inputReader = GetComponent<InputReader>();
         _contactsDetector = GetComponent<ContactsDetector>();
-    }
-
-    private void OnEnable()
-    {
-        _contactsDetector.PillUsed += TakePill;
     }
 
     private void FixedUpdate()
@@ -36,9 +34,8 @@ public class Player : CharacterUnit
             _inputReader.StopToJump();
         }
     }
-
-    private void OnDisable()
+    public void TakePill()
     {
-        _contactsDetector.PillUsed -= TakePill;
+        PillIsTaken?.Invoke();
     }
 }
