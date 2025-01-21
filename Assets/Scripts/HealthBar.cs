@@ -1,4 +1,4 @@
-public class HealthBar : BarScale
+public class HealthBar : BarScaler
 {
     public override void ChangeBarView()
     {

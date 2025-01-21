@@ -1,24 +1,31 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerMover))]
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(ContactsDetector))]
 [RequireComponent(typeof(UnitLife))]
+[RequireComponent(typeof(UnitDamageZona))]
+[RequireComponent(typeof(VampirismActivator))]
 
-public class Player : MonoBehaviour
+public class Player : PersonUnit
 {
+    public event Action ActivityStarted;
+    public event Action ActivityStoped;
+
     private PlayerMover _playerMover;
     private ContactsDetector _contactsDetector;
     private InputReader _inputReader;
-
-    public event Action  PillIsTaken;
+    private UnitDamageZona _playerDamageZona;
+    private VampirismActivator _activator;
 
     private void Awake()
     {
         _playerMover = GetComponent<PlayerMover>();
         _inputReader = GetComponent<InputReader>();
-        _contactsDetector = GetComponent<ContactsDetector>();
+        _contactsDetector = GetComponent<ContactsDetector>();   
+        _playerDamageZona = GetComponent<UnitDamageZona>();
+        _activator = GetComponent<VampirismActivator>();
     }
 
     private void FixedUpdate()
@@ -34,8 +41,35 @@ public class Player : MonoBehaviour
             _inputReader.StopToJump();
         }
     }
-    public void TakePill()
+
+    private void OnEnable()
     {
-        PillIsTaken?.Invoke();
+        _activator.AbilityTurnedOn += UseAbility;
+        _activator.AbilityTurnedOff += StopToUseAbility;
+    }
+
+    private void UseAbility()
+    {
+        if (gameObject.TryGetComponent(out Player player))
+        {
+            _playerDamageZona.SetMaxRadius();
+
+            _playerDamageZona.MonitorArea();
+
+            ActivityStarted?.Invoke();
+        }
+    }
+
+    private void StopToUseAbility()
+    {
+        _playerDamageZona.SetMinRadius();
+
+        ActivityStoped?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        _activator.AbilityTurnedOn -= UseAbility;
+        _activator.AbilityTurnedOff -= StopToUseAbility;
     }
 }

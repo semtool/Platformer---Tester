@@ -3,7 +3,7 @@ using UnityEngine;
 public class ContactsDetector : MonoBehaviour
 {
     private UnitLife _playerHealth;
-
+    
     public bool IsGrounded { get; private set; }
 
     private void Awake()

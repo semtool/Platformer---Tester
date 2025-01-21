@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
+    public event Action VampirizmActivated;
+ 
     private const string HorizontalAxis = "Horizontal";
     private const KeyCode Jump = KeyCode.Space;
+    private const KeyCode Activation = KeyCode.V;
 
     public bool IsJumped { get; private set; }
 
@@ -16,6 +20,11 @@ public class InputReader : MonoBehaviour
         if (Input.GetKeyDown(Jump))
         {
             IsJumped = true;
+        }
+
+        if (Input.GetKeyDown(Activation))
+        {
+            VampirizmActivated?.Invoke();
         }
     }
 

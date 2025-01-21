@@ -1,20 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(UnitLife))]
+[RequireComponent(typeof(UnitDamageZona))]
+public class Enemy : PersonUnit
 {
     [SerializeField] private EnemyMover _enemyMover;
-    [SerializeField] private float _damage;
 
-    public float Damage { get; private set; }
+    private UnitDamageZona _enemyDamageZona;
 
     private void Awake()
     {
-        Damage = _damage;
+        _enemyDamageZona = GetComponent<UnitDamageZona>();
+    }
+
+    private void Start()
+    {
+        ControlMonitoring();
     }
 
     public void MoveToNextPoint(IReadOnlyList<Vector2> nextPoint)
     {
         _enemyMover.MoveByNavigator(nextPoint);
+    }
+
+    private void ControlMonitoring()
+    {
+        if (gameObject.TryGetComponent(out Enemy enemy))
+        {
+            _enemyDamageZona.MonitorArea();
+        }
     }
 }

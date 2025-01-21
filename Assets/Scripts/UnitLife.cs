@@ -9,7 +9,7 @@ public class UnitLife : MonoBehaviour
     public event Action CurrentHealthChanged;
 
     private float _timeToLoseNextPieceOfHealth = 3;
-    private Coroutine _coroutineForChanging;
+    public Coroutine _coroutineForChanging;
     private float _minHealth = 0;
 
     public float MaxHealth { get; private set; }
@@ -35,7 +35,10 @@ public class UnitLife : MonoBehaviour
 
     public void TakeDamage(float damageDose)
     {
-        _coroutineForChanging = StartCoroutine(SpendHealth(damageDose));
+        if (_coroutineForChanging == null)
+        {
+            _coroutineForChanging = StartCoroutine(SpendHealth(damageDose));
+        }
     }
 
     public void StopToTakeDamage()
@@ -63,7 +66,7 @@ public class UnitLife : MonoBehaviour
         }
     }
 
-    private void DecreaseHealth(float damageDose)
+    public void DecreaseHealth(float damageDose)
     {
         CurrentHealth -= damageDose;
 
