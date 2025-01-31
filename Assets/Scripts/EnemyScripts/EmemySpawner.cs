@@ -12,6 +12,7 @@ public class EmemySpawner : MonoBehaviour
     {
         _allPointsTransform = new Transform[_spawnPointsTransform.childCount];
     }
+
     private void Start()
     {
         CreateSeveralEnemies();
@@ -27,11 +28,13 @@ public class EmemySpawner : MonoBehaviour
 
             Enemy enemy = Instantiate(_enemyPrefab, _startPosition, Quaternion.identity);
 
+            EnemyMover enemyMover = enemy.GetComponent<EnemyMover>();
+
             if (_allPointsTransform[i].TryGetComponent(out EnemyNavigator enemyNavigator))
             {
                 if (enemyNavigator.Router.Count > 0)
                 {
-                    enemy.MoveToNextPoint(enemyNavigator.Router);
+                    enemy.MoveToNextPoint(enemyNavigator.Router, enemyMover.PatrolSpeed);
                 }
             }
         }

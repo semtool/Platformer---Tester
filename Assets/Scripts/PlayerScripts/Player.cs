@@ -5,10 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(ContactsDetector))]
 [RequireComponent(typeof(UnitLife))]
-[RequireComponent(typeof(UnitDamageZona))]
+[RequireComponent(typeof(VampireZona))]
 [RequireComponent(typeof(VampirismActivator))]
 
-public class Player : PersonUnit
+public class Player : MonoBehaviour
 {
     public event Action ActivityStarted;
     public event Action ActivityStoped;
@@ -16,15 +16,15 @@ public class Player : PersonUnit
     private PlayerMover _playerMover;
     private ContactsDetector _contactsDetector;
     private InputReader _inputReader;
-    private UnitDamageZona _playerDamageZona;
     private VampirismActivator _activator;
+    private VampireZona _playerDamageZona;
 
     private void Awake()
     {
         _playerMover = GetComponent<PlayerMover>();
         _inputReader = GetComponent<InputReader>();
-        _contactsDetector = GetComponent<ContactsDetector>();   
-        _playerDamageZona = GetComponent<UnitDamageZona>();
+        _contactsDetector = GetComponent<ContactsDetector>();
+        _playerDamageZona = GetComponent<VampireZona>();
         _activator = GetComponent<VampirismActivator>();
     }
 
@@ -63,6 +63,8 @@ public class Player : PersonUnit
     private void StopToUseAbility()
     {
         _playerDamageZona.SetMinRadius();
+
+        _playerDamageZona.StopMonitoringArea();
 
         ActivityStoped?.Invoke();
     }

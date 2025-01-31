@@ -1,10 +1,10 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
-public class SphereVisualisator : MonoBehaviour
+public class CircleVisualisator : MonoBehaviour
 {
-    [SerializeField] private UnitDamageZona _vampireZona;
-    [SerializeField] private PersonUnit _person;
+    [SerializeField] private VampireZona _vampireZona;
+    [SerializeField] private Player _player;
 
     private float _sizeValue = 1000;
     private LineRenderer _lineRenderer;
@@ -18,11 +18,8 @@ public class SphereVisualisator : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_person.TryGetComponent(out Player _player))
-        {
-            _player.ActivityStarted += Draw;
-            _player.ActivityStoped += StopDraw;
-        }
+        _player.ActivityStarted += Draw;
+        _player.ActivityStoped += StopDraw;
     }
 
     private void SetPeacks()
@@ -50,7 +47,7 @@ public class SphereVisualisator : MonoBehaviour
 
         ApplySettings();
 
-        _coroutineForDrawing = StartCoroutine(ProvidDrawing());
+        _coroutineForDrawing = StartCoroutine(ProvidDrawing()); 
     }
 
     private void StopDraw()
@@ -89,18 +86,15 @@ public class SphereVisualisator : MonoBehaviour
             x += gameObject.transform.position.x;
             y += gameObject.transform.position.y;
 
-            Vector3 pos = new Vector3(x, y, 0);
+            Vector3 circlePosition = new Vector3(x, y, 0);
 
-            _lineRenderer.SetPosition(i, pos);
+            _lineRenderer.SetPosition(i, circlePosition);
         }
     }
 
     private void OnDisable()
     {
-        if (_person.TryGetComponent(out Player _player))
-        {
-            _player.ActivityStarted -= Draw;
-            _player.ActivityStoped -= StopDraw;
-        }
+        _player.ActivityStarted -= Draw;
+        _player.ActivityStoped -= StopDraw;
     }
 }

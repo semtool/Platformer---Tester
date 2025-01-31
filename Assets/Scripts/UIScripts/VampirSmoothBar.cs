@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class VampirSmoothBar : MonoBehaviour
 {
     [SerializeField] private VampirismActivator _activator;
@@ -10,7 +9,6 @@ public class VampirSmoothBar : MonoBehaviour
 
     private Coroutine _coroutine;
     private float _volueStep = 0.4f;
-
     private float _volueMultiplier = 0.01f;
     private int _maxTimeInPercent = 100;
 
@@ -56,7 +54,7 @@ public class VampirSmoothBar : MonoBehaviour
 
     private float CalkulateDataForBar()
     {
-        return _activator.CurrentLevel * _maxTimeInPercent / _activator.MaxTime;
+        return _activator.CurrentTime * _maxTimeInPercent / _activator.MaxTime;
     }
 
     private void OnDisable()

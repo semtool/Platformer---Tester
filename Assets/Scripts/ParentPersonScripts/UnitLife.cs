@@ -8,8 +8,8 @@ public class UnitLife : MonoBehaviour
 
     public event Action CurrentHealthChanged;
 
+    private Coroutine _coroutineForChanging;
     private float _timeToLoseNextPieceOfHealth = 3;
-    public Coroutine _coroutineForChanging;
     private float _minHealth = 0;
 
     public float MaxHealth { get; private set; }
@@ -18,7 +18,7 @@ public class UnitLife : MonoBehaviour
     private void Awake()
     {
         MaxHealth = _maxHealth;
-        CurrentHealth = _maxHealth;
+        CurrentHealth = MaxHealth;
     }
 
     public void IncreaseHealth(float healthDose)
@@ -46,7 +46,21 @@ public class UnitLife : MonoBehaviour
         if (_coroutineForChanging != null)
         {
             StopCoroutine(_coroutineForChanging);
+
+            _coroutineForChanging = null;
         }
+    }
+
+    public void DecreaseHealth(float damageDose)
+    {
+        CurrentHealth -= damageDose;
+
+        if (CurrentHealth <= _minHealth)
+        {
+            Destroy(gameObject);
+        }
+
+        InformHealthIsChanged();
     }
 
     private void InformHealthIsChanged()
@@ -64,17 +78,5 @@ public class UnitLife : MonoBehaviour
 
             yield return wait;
         }
-    }
-
-    public void DecreaseHealth(float damageDose)
-    {
-        CurrentHealth -= damageDose;
-
-        if (CurrentHealth <= _minHealth)
-        {
-            Destroy(gameObject);
-        }
-
-        InformHealthIsChanged();
     }
 }
