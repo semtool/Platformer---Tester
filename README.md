@@ -1,6 +1,6 @@
 # Platformer | Unity 2D
 
-[![Unity Version](https://img.shields.io/badge/Unity-2022.3.32f1+-black?logo=unity)](https://unity.com)
+[![Unity Version](https://img.shields.io/badge/Unity-2022.3.32f1-black?logo=unity)](https://unity.com)
 
 ##  Особенности
 -управлять бегом, прыжками, разворотами персонажа для добычи ресурсов и уворачиваться от врагов
